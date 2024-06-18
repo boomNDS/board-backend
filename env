@@ -1,7 +1,0 @@
-PORT=3005
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=board-database
-DB_USER=postgres
-DB_PASS=root
-DB_PORT=5432
