@@ -13,6 +13,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum PostCommunity {
+  history
+  food
+  pets
+  health
+  fashion
+  exercise
+  others
+}
+
 model User {
   id       Int       @id @default(autoincrement())
   email    String    @unique
@@ -23,11 +33,12 @@ model User {
 }
 
 model Post {
-  id        Int       @id @default(autoincrement())
+  id        Int           @id @default(autoincrement())
   title     String
   content   String?
-  published Boolean?  @default(false)
-  author    User?     @relation(fields: [authorId], references: [id])
+  published Boolean?      @default(false)
+  community PostCommunity @default(history)
+  author    User?         @relation(fields: [authorId], references: [id])
   authorId  Int?
   comments  Comment[]
 }
