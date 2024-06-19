@@ -10,10 +10,10 @@ import { jwtConstants } from './constants';
 
 @Module({
   imports: [
-    PassportModule.register({ session: false }),
+    PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '3h' },
+      signOptions: { expiresIn: '120m' },
     }),
   ],
   controllers: [AuthController],

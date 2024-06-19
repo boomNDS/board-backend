@@ -1,17 +1,11 @@
 import { User } from '@prisma/client';
-import * as bcrypt from 'bcrypt';
+import { IUser } from '../interface/user.interface';
 
-export const mockUser = async (
-  overrides: Partial<User> = {},
-): Promise<User> => {
-  const password = overrides.password || 'testpassword';
-  const hashedPassword = await bcrypt.hash(password, 10);
-
+export const mockUser = (overrides: Partial<User> = {}): IUser => {
   return {
     id: overrides.id || 1,
     username: overrides.username || 'testUser',
-    password: hashedPassword,
-    name: overrides.name || 'Test User',
+    password: overrides.password || 'password',
     ...overrides,
   };
 };
