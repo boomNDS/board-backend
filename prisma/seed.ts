@@ -11,7 +11,7 @@ async function main() {
   // Create a user with a post
   const user1 = await prisma.user.create({
     data: {
-      email: 'boom@test.com',
+      username: 'mr.boom',
       name: 'Mr.Boom',
       password: hash,
       posts: {
@@ -32,7 +32,7 @@ async function main() {
   // Create another user with a comment referencing the post created above
   await prisma.user.create({
     data: {
-      email: 'amCool@test.com',
+      username: 'amCool',
       name: 'Cool guy',
       password: hash,
       comments: {
@@ -40,9 +40,9 @@ async function main() {
           content: 'Great post on Prisma with Next.js!',
           post: {
             connect: {
-              id: post.id
-            }
-          }
+              id: post.id,
+            },
+          },
         },
       },
     },

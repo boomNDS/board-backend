@@ -1,7 +1,10 @@
+-- CreateEnum
+CREATE TYPE "PostCommunity" AS ENUM ('history', 'food', 'pets', 'health', 'fashion', 'exercise', 'others');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
-    "email" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
     "name" TEXT,
     "password" TEXT NOT NULL,
 
@@ -14,6 +17,7 @@ CREATE TABLE "Post" (
     "title" TEXT NOT NULL,
     "content" TEXT,
     "published" BOOLEAN DEFAULT false,
+    "community" "PostCommunity" NOT NULL DEFAULT 'history',
     "authorId" INTEGER,
 
     CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
@@ -30,7 +34,7 @@ CREATE TABLE "Comment" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- AddForeignKey
 ALTER TABLE "Post" ADD CONSTRAINT "Post_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
