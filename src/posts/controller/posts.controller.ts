@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common';
 import { PostsService } from '../service/posts.service';
 import { CreatePostDto } from '../dto/create-post.dto';
-import { UpdatePostDto } from '../dto/update-post.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 
@@ -41,7 +40,7 @@ export class PostsController {
   update(
     @Param('id') id: string,
     @Request() req,
-    @Body() payload: UpdatePostDto,
+    @Body() payload: CreatePostDto,
   ) {
     return this.postsService.update(+id, {
       ...payload,

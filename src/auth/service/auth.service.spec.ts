@@ -5,6 +5,8 @@ import { JwtService } from '@nestjs/jwt';
 import { mockUser } from '../../user/factory/user.factory';
 import * as bcrypt from 'bcrypt';
 
+jest.mock('bcrypt');
+
 describe('AuthService', () => {
   let service: AuthService;
   let userService: UserService;
@@ -43,6 +45,7 @@ describe('AuthService', () => {
     it('should return user without password if validation is successful', async () => {
       const user = await mockUser();
       userService.findOne = jest.fn().mockResolvedValue(user);
+      (bcrypt.compare as jest.Mock).mockResolvedValue(true);
 
       const result = await service.validateUser('testUser', 'testpassword');
       expect(result).toEqual(
@@ -63,6 +66,7 @@ describe('AuthService', () => {
         password: await bcrypt.hash('wrongpassword', 10),
       });
       userService.findOne = jest.fn().mockResolvedValue(user);
+      (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
       const result = await service.validateUser('testUser', 'testpassword');
       expect(result).toBeNull();
@@ -73,9 +77,14 @@ describe('AuthService', () => {
     it('should return an access token', async () => {
       const mockToken = 'mockToken';
       jwtService.sign = jest.fn().mockReturnValue(mockToken);
-
       const user = await mockUser();
-      const result = await service.login(user);
+      userService.findOne = jest.fn().mockResolvedValue(user);
+      (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+
+      const result = await service.login({
+        username: user.username,
+        password: 'testpassword',
+      });
       expect(result).toEqual({ access_token: mockToken });
     });
   });
@@ -84,7 +93,6 @@ describe('AuthService', () => {
     it('should create a new user and return an access token', async () => {
       const mockToken = 'mockToken';
       const user = await mockUser();
-
       userService.create = jest.fn().mockResolvedValue(user);
       jwtService.sign = jest.fn().mockReturnValue(mockToken);
 

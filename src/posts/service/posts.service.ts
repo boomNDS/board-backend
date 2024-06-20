@@ -35,6 +35,11 @@ export class PostsService {
           },
         },
       },
+      orderBy: [
+        {
+          createdAt: 'desc',
+        },
+      ],
     });
   }
 
@@ -53,6 +58,8 @@ export class PostsService {
           select: {
             id: true,
             content: true,
+            createdAt: true,
+            updatedAt: true,
             author: {
               select: {
                 id: true,
@@ -61,6 +68,11 @@ export class PostsService {
               },
             },
           },
+          orderBy: [
+            {
+              createdAt: 'desc',
+            },
+          ],
         },
       },
     });
