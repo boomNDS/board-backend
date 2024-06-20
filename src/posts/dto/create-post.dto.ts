@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { $Enums } from '@prisma/client';
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreatePostDto {
   @ApiProperty({
@@ -23,4 +23,13 @@ export class CreatePostDto {
   @IsNotEmpty()
   @IsEnum($Enums.PostCommunity)
   community: $Enums.PostCommunity;
+}
+
+export class CreateCommentDto {
+  @ApiProperty({
+    type: String,
+  })
+  @IsNotEmpty()
+  @IsString()
+  content: string;
 }

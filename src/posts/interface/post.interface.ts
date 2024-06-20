@@ -7,3 +7,10 @@ export interface IPost {
   authorId: number;
   community: $Enums.PostCommunity;
 }
+
+export interface IComment {
+  id?: number;
+  content: string;
+  postId: number;
+  authorId: number;
+}

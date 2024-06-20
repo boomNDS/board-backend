@@ -10,7 +10,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { PostsService } from '../service/posts.service';
-import { CreatePostDto } from '../dto/create-post.dto';
+import { CreateCommentDto, CreatePostDto } from '../dto/create-post.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 
@@ -52,5 +52,25 @@ export class PostsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.postsService.remove(+id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/Comment')
+  addComment(
+    @Param('id') id: string,
+    @Request() req,
+    @Body() payload: CreateCommentDto,
+  ) {
+    return this.postsService.addComment({
+      ...payload,
+      postId: +id,
+      authorId: +req.user.userId,
+    });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id/Comment/:commendId')
+  removeComment(@Param('id') id: string, @Param('id') commentId: string) {
+    return this.postsService.removeComment(+id, +commentId);
   }
 }
