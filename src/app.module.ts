@@ -8,6 +8,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './auth/constants';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { jwtConstants } from './auth/constants';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '180m' },
     }),
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [PrismaService, ConfigService, AppService],
