@@ -107,6 +107,7 @@ export class PostsService {
   }
 
   async addComment(payload: IComment): Promise<Comment> {
+    await this.findOne(payload.postId);
     return this.prisma.comment.create({
       data: {
         ...payload,

@@ -62,11 +62,42 @@ $ yarn run test:cov
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+## ER
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```mermaid
+erDiagram
+    User {
+        int id
+        string username
+        string name
+        string password
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    Post {
+        int id
+        string title
+        string content
+        PostCommunity community
+        int authorId
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    Comment {
+        int id
+        string content
+        int postId
+        int authorId
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    User ||--o{ Post : "posts"
+    Comment }o--|| User : "author"
+    Comment }o--|| Post : "post"
+```
 
 ## License
 

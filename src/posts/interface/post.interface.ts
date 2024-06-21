@@ -3,8 +3,8 @@ import { $Enums } from '@prisma/client';
 export interface IPost {
   id?: number;
   title: string;
-  content: string;
-  authorId: number;
+  content: string | null;
+  authorId: number | null;
   community: $Enums.PostCommunity;
 }
 
